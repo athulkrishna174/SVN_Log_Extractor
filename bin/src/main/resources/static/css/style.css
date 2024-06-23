@@ -1,0 +1,48 @@
+body{
+    box-sizing: border-box;
+}
+
+#mainHeading{
+    text-align: center;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+#parentDiv{
+    text-align: center;
+    width: 100%;
+}
+
+.formDivClass{
+    display: inline-block;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 10px;
+    margin:auto;
+}
+
+#outputFormatHeading{
+    margin-top: 5px;
+    align-items: center;
+}
+
+.inputField{
+    width: 600px;
+}
+
+#extractBtn{
+    margin-top: 10px;
+    width: 100px;
+}
+
+.otherInput{
+    width: 140px;
+    display: inline;
+}
+
+td{
+    padding: 10px;
+}
+
+.heading{
+    font-weight: bolder;
+}
