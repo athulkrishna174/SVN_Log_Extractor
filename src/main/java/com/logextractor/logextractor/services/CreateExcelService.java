@@ -36,6 +36,7 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 			Sheet sheet = workbook.createSheet(extractor.getSelectedProject());
 
 			int rowCount = 0;
+			int cellCount = 1;
 
 			XSSFRow row = (XSSFRow) sheet.createRow(rowCount++);
 
@@ -54,7 +55,7 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 			headerFont.setBold(true);
 			headerStyle.setFont(headerFont);
 
-			XSSFCell headerCell = row.createCell(1);
+			XSSFCell headerCell = row.createCell(cellCount);
 			headerCell.setCellValue("Files");
 			headerCell.setCellStyle(headerStyle);
 
@@ -71,12 +72,12 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 			while (lines.hasNextLine()) {
 				row = (XSSFRow) sheet.createRow(rowCount++);
 
-				XSSFCell contentCell = row.createCell(1);
+				XSSFCell contentCell = row.createCell(cellCount);
 				contentCell.setCellValue(lines.nextLine().trim());
 				contentCell.setCellStyle(contentStyle);
 			}
 
-			sheet.autoSizeColumn(1);
+			sheet.autoSizeColumn(cellCount);
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
 		}
