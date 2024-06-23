@@ -26,8 +26,8 @@ function hideUnHideBlock(check, blockId) {
 }
 
 function validateExtractForm() {
-	let optionRemoveUnwanted = document.getElementById("optionRemoveUnwanted");
-	let requiredFormats = document.querySelectorAll('input[name="requiredFormats"]');
+	const optionRemoveUnwanted = document.getElementById("optionRemoveUnwanted");
+	const requiredFormats = document.querySelectorAll('input[name="requiredFormats"]');
 	let isSelectedReqFormat = false;
 
 
