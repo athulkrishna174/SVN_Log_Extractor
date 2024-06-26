@@ -84,46 +84,4 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 
 		return workbook;
 	}
-
-	public static void main(String[] args) {
-		CreateExcelService service = new CreateExcelService();
-
-		Extractor extractor = new Extractor();
-		extractor.setSelectedProject("test");
-
-		extractor.setExtractedString(
-				"M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/.settings/org.eclipse.wst.common.project.facet.core.xml\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/common/MessageProcess.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/common/MessageProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/common/ScheduleHelperEJBBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/reports/ReportTemplate.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/reports/ReportTemplateBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ebs/mymt/schedule/MymtScheduleBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/common/util/MsgProcessUtil.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/common/util/SubscribeNotifyUtil.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/common/window/WindowBasedProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/common/CommonMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/common/MsgProcess.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/common/MsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/corppymt/CorpPymtMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/mandate/MandateMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/mymt/stmt/StmtMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/ach/ACHMsgProcess.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/ach/ACHMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/bankhub/BankHubMsgProcess.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/bankhub/BankHubMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/fpx/FPXMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/realtime/RealTimeMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/realtime/util/ProcessAsynchronousMsgsCtrlr.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/rtgs/RTGSMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/rtp/RTPMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/rtp/util/RTPMsgProcessUtil.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecs/pymts/wps/WPSMsgProcessBean.java\r\n"
-						+ "M /MYMT/branches/MYMT 7.1.0/MsgProcessEJB/src/com/ecsfin/integratedfiles/IntegratedFilesProcessBean.java");
-
-		service.generateExcel(extractor);
-
-		System.out.println("finished");
-	}
-
 }
