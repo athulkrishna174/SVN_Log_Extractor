@@ -70,7 +70,7 @@ public class ExtractorController implements AppConstants {
 				}
 
 				if (options.contains(REMOVE_UNWNTED)) {
-					extractor = removeUnwanted.extract(extractor);
+					extractor = removeUnwanted.extract(extractor); 
 				}
 			}
 
