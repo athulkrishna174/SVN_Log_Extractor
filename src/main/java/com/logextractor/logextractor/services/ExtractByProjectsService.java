@@ -1,7 +1,5 @@
 package com.logextractor.logextractor.services;
 
-import java.util.Scanner;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,20 +15,17 @@ public class ExtractByProjectsService implements AppConstants, ExtractorInterfac
 		String extractedString = extractor.getExtractedString();
 		String projectName = extractor.getSelectedProject();
 		StringBuilder projectExtractedString = new StringBuilder();
-
-		try (Scanner lines = new Scanner(extractedString)) {
-
-			while (lines.hasNextLine()) {
-				String line = lines.nextLine().trim();
-				if (line.contains(projectName)) {
-					projectExtractedString.append(line).append(System.lineSeparator());
-				}
-			}
-
+		
+		try {
+			extractedString.lines()
+			.filter(line -> line.contains(projectName))
+			.forEach(line -> 
+				projectExtractedString.append(line).append(System.lineSeparator())
+			);
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
 		}
-
+		
 		extractor.setExtractedString(projectExtractedString.toString());
 		return extractor;
 	}

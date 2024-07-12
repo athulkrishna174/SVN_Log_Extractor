@@ -1,7 +1,5 @@
 package com.logextractor.logextractor.services;
 
-import java.util.Scanner;
-
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -28,54 +26,24 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 	public Workbook generateExcel(Extractor extractor) {
 
 		String extractedString = extractor.getExtractedString();
-		
 		Workbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet(extractor.getSelectedProject());
+				
+		XSSFCellStyle headerStyle = createHeaderStyle(workbook);
+	    XSSFCellStyle contentStyle = createContentStyle(workbook);
 
-		try (Scanner lines = new Scanner(extractedString)) {
-			
-			Sheet sheet = workbook.createSheet(extractor.getSelectedProject());
-
-			int rowCount = 0;
+		try {
+			int[] rowCount = {1};
 			int cellCount = 1;
 
-			XSSFRow row = (XSSFRow) sheet.createRow(rowCount++);
+			XSSFRow headerRow = (XSSFRow) sheet.createRow(rowCount[0]++);
+			createCell(headerRow, cellCount, "Files", headerStyle);
+			
 
-			XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-			headerStyle.setFillForegroundColor(IndexedColors.TEAL.getIndex());
-			headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-			headerStyle.setBorderTop(BorderStyle.THIN);
-			headerStyle.setBorderBottom(BorderStyle.THIN);
-			headerStyle.setBorderLeft(BorderStyle.THIN);
-			headerStyle.setBorderRight(BorderStyle.THIN);
-			headerStyle.setWrapText(true);
-
-			XSSFFont headerFont = ((XSSFWorkbook) workbook).createFont();
-			headerFont.setFontName("Calibri");
-			headerFont.setColor(IndexedColors.WHITE.getIndex());
-			headerFont.setBold(true);
-			headerStyle.setFont(headerFont);
-
-			XSSFCell headerCell = row.createCell(cellCount);
-			headerCell.setCellValue("Files");
-			headerCell.setCellStyle(headerStyle);
-
-			XSSFCellStyle contentStyle = (XSSFCellStyle) workbook.createCellStyle();
-			contentStyle.setBorderTop(BorderStyle.THIN);
-			contentStyle.setBorderBottom(BorderStyle.THIN);
-			contentStyle.setBorderLeft(BorderStyle.THIN);
-			contentStyle.setBorderRight(BorderStyle.THIN);
-
-			XSSFFont contentFont = (XSSFFont) workbook.createFont();
-			contentFont.setFontName("Calibri");
-			contentStyle.setFont(contentFont);
-
-			while (lines.hasNextLine()) {
-				row = (XSSFRow) sheet.createRow(rowCount++);
-
-				XSSFCell contentCell = row.createCell(cellCount);
-				contentCell.setCellValue(lines.nextLine().trim());
-				contentCell.setCellStyle(contentStyle);
-			}
+			extractedString.lines().map(String::trim).forEach(line -> {
+				XSSFRow contentRow = (XSSFRow) sheet.createRow(rowCount[0]++);
+	            createCell(contentRow, cellCount, line, contentStyle);
+			});
 
 			sheet.autoSizeColumn(cellCount);
 		} catch (Exception e) {
@@ -83,5 +51,44 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 		}
 
 		return workbook;
+	}
+	
+	private XSSFCellStyle createHeaderStyle(Workbook workbook) {
+	    XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+	    style.setFillForegroundColor(IndexedColors.TEAL.getIndex());
+	    style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    style.setBorderTop(BorderStyle.THIN);
+	    style.setBorderBottom(BorderStyle.THIN);
+	    style.setBorderLeft(BorderStyle.THIN);
+	    style.setBorderRight(BorderStyle.THIN);
+	    style.setWrapText(true);
+
+	    XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+	    font.setFontName("Calibri");
+	    font.setColor(IndexedColors.WHITE.getIndex());
+	    font.setBold(true);
+	    style.setFont(font);
+
+	    return style;
+	}
+	
+	private XSSFCellStyle createContentStyle(Workbook workbook) {
+	    XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+	    style.setBorderTop(BorderStyle.THIN);
+	    style.setBorderBottom(BorderStyle.THIN);
+	    style.setBorderLeft(BorderStyle.THIN);
+	    style.setBorderRight(BorderStyle.THIN);
+
+	    XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+	    font.setFontName("Calibri");
+	    style.setFont(font);
+
+	    return style;
+	}
+
+	private void createCell(XSSFRow row, int cellCount, String value, XSSFCellStyle style) {
+	    XSSFCell cell = row.createCell(cellCount);
+	    cell.setCellValue(value);
+	    cell.setCellStyle(style);
 	}
 }

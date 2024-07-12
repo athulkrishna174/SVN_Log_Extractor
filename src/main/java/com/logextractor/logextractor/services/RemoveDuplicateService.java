@@ -1,7 +1,6 @@
 package com.logextractor.logextractor.services;
 
 import java.util.LinkedHashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -19,13 +18,10 @@ public class RemoveDuplicateService implements AppConstants, ExtractorInterface 
 		String extractedString = extractor.getExtractedString();
 		Set<String> uniqueLines = new LinkedHashSet<>();
 		
-
-		try (Scanner lines = new Scanner(extractedString)) {
-
-			while (lines.hasNextLine()) {
-				uniqueLines.add(lines.nextLine().trim());
-			}
-
+		try {
+			extractedString.lines()
+			.map(String::trim)
+			.forEach(uniqueLines::add);
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
 		}

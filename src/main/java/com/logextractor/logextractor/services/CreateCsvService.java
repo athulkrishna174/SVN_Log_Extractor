@@ -1,7 +1,5 @@
 package com.logextractor.logextractor.services;
 
-import java.util.Scanner;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,12 +15,11 @@ public class CreateCsvService implements AppConstants, ExtractorInterface {
 		String extractedString = extractor.getExtractedString();
 		StringBuilder csvString = new StringBuilder();
 
-		try (Scanner lines = new Scanner(extractedString)) {
-
-			while (lines.hasNextLine()) {
-				csvString.append(lines.nextLine().trim()).append(COMMA).append(System.lineSeparator());
-			}
-
+		try {			
+			extractedString.lines()
+			.map(String::trim)
+			.forEach(line -> 
+				csvString.append(line).append(COMMA).append(System.lineSeparator()));
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
 		}

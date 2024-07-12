@@ -22,11 +22,8 @@ public class FileToStringService implements AppConstants, ExtractorInterface {
 
 		try (BufferedReader reader = new BufferedReader(
 				new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
-			String line;
-
-			while ((line = reader.readLine()) != null) {
-				extractedString.append(line.trim()).append(System.lineSeparator());
-			}
+			reader.lines().map(String::trim)
+					.forEach(line -> extractedString.append(line).append(System.lineSeparator()));
 
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);

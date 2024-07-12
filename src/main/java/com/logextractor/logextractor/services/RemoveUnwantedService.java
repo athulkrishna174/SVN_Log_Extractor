@@ -1,7 +1,6 @@
 package com.logextractor.logextractor.services;
 
 import java.util.List;
-import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +18,13 @@ public class RemoveUnwantedService implements AppConstants, ExtractorInterface {
 		List<String> requiredFormats = extractor.getRequiredFormats();
 		StringBuilder unwantedRemovedString = new StringBuilder();
 
-		try (Scanner lines = new Scanner(extractedString)) {
-
-			while (lines.hasNextLine()) {
-				String line = lines.nextLine().trim();
-				if (requiredFormats.stream().anyMatch(line::contains)) {
-					unwantedRemovedString.append(line).append(System.lineSeparator());
-				}
-			}
-
+		try {
+			extractedString.lines()
+			.map(String::trim)
+			.filter(line -> 
+			requiredFormats.stream().anyMatch(line::contains))
+			.forEach(line -> 
+				unwantedRemovedString.append(line).append(System.lineSeparator()));
 		} catch (Exception e) {
 			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
 		}
