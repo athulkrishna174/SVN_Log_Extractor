@@ -9,7 +9,7 @@
     <h1 id="mainHeading">SVN COMMIT HISTORY EXTRACTOR</h1>
     <div id="parentDiv">
         <div class="formDivClass">
-            <form action="/extract" method="post" modelAttribute="extractor" enctype="multipart/form-data" onsubmit="return validateExtractForm();">
+            <form action="/extract" method="post" modelAttribute="extractorDto" enctype="multipart/form-data" onsubmit="return validateExtractForm();">
                 <div id="pathDiv">
                 	<table>
                 		<tr>
@@ -30,15 +30,15 @@
                                 <label for="outFormat" id="outputFormatHeading" class="heading h6">Output File Format:</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="txtFormat" name="outputFileFormat" value=".txt" checked="checked">
+                                <input class="form-check-input" type="radio" id="txtFormat" name="outputFileFormat" value=".txt" checked="checked" onchange="changeOutputFormat(this)">
                                 <label class="form-check-label" for="txtFormat">.txt</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="csvFormat" name="outputFileFormat" value=".csv">
+                                <input class="form-check-input" type="radio" id="csvFormat" name="outputFileFormat" value=".csv" onchange="changeOutputFormat(this)">
                                 <label class="form-check-label" for="csvFormat">.csv</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="excelFormat" name="outputFileFormat" value=".xlsx">
+                                <input class="form-check-input" type="radio" id="excelFormat" name="outputFileFormat" value=".xlsx" onchange="changeOutputFormat(this)">
                                 <label class="form-check-label" for="csvFormat">.xlsx</label>
                             </td>
                         </tr>
@@ -48,52 +48,91 @@
                 <div id="projectsDiv">
                     <p class="heading h6">Select Projects:</p>
 
-                    <table>
+                    <table id="projectNameTable">
                         <tr>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectMymt" name="selectedProject" value="MYMT" checked="checked">
+                                <input class="form-check-input" type="radio" id="projectMymt" name="projectName" value="MYMT" checked="checked">
                                 <label class="form-check-label" for="projectMymt">MYMT</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectApplicationEAR" name="selectedProject" value="ApplicationEAR">
+                                <input class="form-check-input" type="radio" id="projectApplicationEAR" name="projectName" value="ApplicationEAR">
                                 <label class="form-check-label" for="projectApplicationEAR">ApplicationEAR</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectDataAccessTier" name="selectedProject" value="DataAccessTier">
+                                <input class="form-check-input" type="radio" id="projectDataAccessTier" name="projectName" value="DataAccessTier">
                                 <label class="form-check-label" for="projectDataAccessTier">DataAccessTier</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectBusinessTier" name="selectedProject" value="BusinessTier">
+                                <input class="form-check-input" type="radio" id="projectBusinessTier" name="projectName" value="BusinessTier">
                                 <label class="form-check-label" for="projectBusinessTier">BusinessTier</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectBusinessComponentClient" name="selectedProject" value="BusinessComponentClient">
+                                <input class="form-check-input" type="radio" id="projectBusinessComponentClient" name="projectName" value="BusinessComponentClient">
                                 <label class="form-check-label" for="projectBusinessComponentClient">BusinessComponentClient</label>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectMymtProfile" name="selectedProject" value="MymtProfile">
+                                <input class="form-check-input" type="radio" id="projectMymtProfile" name="projectName" value="MymtProfile">
                                 <label class="form-check-label" for="projectMymtProfile">MymtProfile</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectMsgProcessEJB" name="selectedProject" value="MsgProcessEJB">
+                                <input class="form-check-input" type="radio" id="projectMsgProcessEJB" name="projectName" value="MsgProcessEJB">
                                 <label class="form-check-label" for="projectMsgProcessEJB">MsgProcessEJB</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectDataBaseScript" name="selectedProject" value="DataBaseScript">
+                                <input class="form-check-input" type="radio" id="projectDataBaseScript" name="projectName" value="DataBaseScript">
                                 <label class="form-check-label" for="projectDataBaseScript">DataBaseScript</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="radio" id="projectPresentationTier" name="selectedProject" value="PresentationTier">
+                                <input class="form-check-input" type="radio" id="projectPresentationTier" name="projectName" value="PresentationTier">
                                 <label class="form-check-label" for="projectPresentationTier">PresentationTier</label>
                             </td>
-                            <!-- <td>
-                                <input class="form-check-input" type="checkbox" id="projectOther" name="selectedProject" value="otherProject" onChange="enableDisableOtherInput(this, 'otherProject')">
-                                <label class="form-check-label" for="projectOther">Other:</label>
-                                <input type="text" id="otherProject" name="otherProject" disabled="true" class="otherInput form-control form-control-sm">
-                            </td> -->
+                        </tr>
+                    </table>
+                    
+                    <table id="selectedProjectsTable" style="display: none;">
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectMymt" name="selectedProjects" value="MYMT" checked="checked">
+                                <label class="form-check-label" for="projectMymt">MYMT</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectApplicationEAR" name="selectedProjects" value="ApplicationEAR">
+                                <label class="form-check-label" for="projectApplicationEAR">ApplicationEAR</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectDataAccessTier" name="selectedProjects" value="DataAccessTier">
+                                <label class="form-check-label" for="projectDataAccessTier">DataAccessTier</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectBusinessTier" name="selectedProjects" value="BusinessTier">
+                                <label class="form-check-label" for="projectBusinessTier">BusinessTier</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectBusinessComponentClient" name="selectedProjects" value="BusinessComponentClient">
+                                <label class="form-check-label" for="projectBusinessComponentClient">BusinessComponentClient</label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectMymtProfile" name="selectedProjects" value="MymtProfile">
+                                <label class="form-check-label" for="projectMymtProfile">MymtProfile</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectMsgProcessEJB" name="selectedProjects" value="MsgProcessEJB">
+                                <label class="form-check-label" for="projectMsgProcessEJB">MsgProcessEJB</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectDataBaseScript" name="selectedProjects" value="DataBaseScript">
+                                <label class="form-check-label" for="projectDataBaseScript">DataBaseScript</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="projectPresentationTier" name="selectedProjects" value="PresentationTier">
+                                <label class="form-check-label" for="projectPresentationTier">PresentationTier</label>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -104,7 +143,7 @@
                     <table>
                         <tr>
                         	<td>
-                                <input class="form-check-input" type="checkbox" id="optionSortFile" name="optionList" value="SORT_FILE" checked="true">
+                                <input class="form-check-input" type="checkbox" id="optionSortFile" name="optionList" value="SORT_FILE" checked="checked">
                                 <label class="form-check-label" for="optionSortFile">Sort File</label>
                             </td>
                             <td>
@@ -112,7 +151,7 @@
                                 <label class="form-check-label" for="optionRemoveDuple">Remove Duplicate</label>
                             </td>
                             <td>
-                                <input class="form-check-input" type="checkbox" id="optionRemoveUnwanted" name="optionList" value="REMOVE_UNWNTED" onChange="hideUnHideBlock(this, 'requiredFormatDiv')">
+                                <input class="form-check-input" type="checkbox" id="optionRemoveUnwanted" name="optionList" value="REMOVE_UNWANTED" onChange="hideUnHideBlock(this, 'requiredFormatDiv')">
                                 <label class="form-check-label" for="optionRemoveUnwanted">Remove Unwanted Lines</label>
                             </td>
                         </tr>
@@ -164,20 +203,11 @@
                                     <label for="requiredProperties">.properties</label>
                                 </td>
                             </tr>
-
-                            <!-- <tr>
-                                <td colspan="10">
-                                    <input class="form-check-input" type="checkbox" id="needOther" name="needOther" value="otherFormat" onChange="enableDisableOtherInput(this, 'otherNeededFormat')">
-                                    <label for="needOther">Other:</label>
-                                    <input type="text" id="otherNeededFormat" name="otherNeededFormat" disabled="true" class="otherInput form-control form-control-sm">
-                                </td>
-                            </tr> -->
                         </table>
 
                     </div>
                 </div>
                 <Button class="btn btn-primary" type="submit" id="extractBtn" value="Extract">Extract</Button>
-                <!-- <Button class="btn btn-primary" type="reset" id="extractBtn" value="Extract">Reset</Button> -->
             </form>
         </div>
     </div>

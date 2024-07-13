@@ -85,11 +85,6 @@
                                 <input class="form-check-input" type="radio" id="projectPresentationTier" name="selectedProject" value="PresentationTier">
                                 <label class="form-check-label" for="projectPresentationTier">PresentationTier</label>
                             </td>
-                            <!-- <td>
-                                <input class="form-check-input" type="checkbox" id="projectOther" name="selectedProject" value="otherProject" onChange="enableDisableOtherInput(this, 'otherProject')">
-                                <label class="form-check-label" for="projectOther">Other:</label>
-                                <input type="text" id="otherProject" name="otherProject" disabled="true" class="otherInput form-control form-control-sm">
-                            </td> -->
                         </tr>
                     </table>
                 </div>
@@ -100,7 +95,7 @@
                     <table>
                         <tr>
                         	<td>
-                                <input class="form-check-input" type="checkbox" id="optionSortFile" name="optionList" value="SORT_FILE" checked="true">
+                                <input class="form-check-input" type="checkbox" id="optionSortFile" name="optionList" value="SORT_FILE" checked="checked">
                                 <label class="form-check-label" for="optionSortFile">Sort File</label>
                             </td>
                             <td>
@@ -160,20 +155,11 @@
                                     <label for="requiredProperties">.properties</label>
                                 </td>
                             </tr>
-
-                            <!-- <tr>
-                                <td colspan="10">
-                                    <input class="form-check-input" type="checkbox" id="needOther" name="needOther" value="otherFormat" onChange="enableDisableOtherInput(this, 'otherNeededFormat')">
-                                    <label for="needOther">Other:</label>
-                                    <input type="text" id="otherNeededFormat" name="otherNeededFormat" disabled="true" class="otherInput form-control form-control-sm">
-                                </td>
-                            </tr> -->
                         </table>
 
                     </div>
                 </div>
                 <Button class="btn btn-primary" type="submit" id="extractBtn" value="Extract">Extract</Button>
-                <!-- <Button class="btn btn-primary" type="reset" id="extractBtn" value="Extract">Reset</Button> -->
             </form>
         </div>
     </div>

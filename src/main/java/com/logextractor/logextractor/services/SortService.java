@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.logextractor.logextractor.constants.AppConstants;
+import com.logextractor.logextractor.enums.ErrorMessage;
 import com.logextractor.logextractor.interfaces.ExtractorInterface;
 import com.logextractor.logextractor.models.Extractor;
 
@@ -22,7 +23,7 @@ public class SortService implements AppConstants, ExtractorInterface {
 					.collect(Collectors.joining(System.lineSeparator()));
 			extractor.setExtractedString(sortedString);
 		} catch (Exception e) {
-			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
+			logger.debug(ErrorMessage.ERROR_OCCURRED.getMessage(), e.getMessage(), e);
 		}
 		return extractor;
 	}

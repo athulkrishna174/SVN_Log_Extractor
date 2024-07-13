@@ -1,6 +1,11 @@
 window.onload = function() {
-	let check = document.getElementById('optionRemoveUnwanted');
+	const check = document.getElementById('optionRemoveUnwanted');
+	const outputFormat = document.getElementById('excelFormat');
 	hideUnHideBlock(check, 'requiredFormatDiv');
+	
+	if(outputFormat.checked){	
+		changeOutputFormat(outputFormat);
+	}
 }
 
 
@@ -28,21 +33,51 @@ function hideUnHideBlock(check, blockId) {
 function validateExtractForm() {
 	const optionRemoveUnwanted = document.getElementById("optionRemoveUnwanted");
 	const requiredFormats = document.querySelectorAll('input[name="requiredFormats"]');
-	let isSelectedReqFormat = false;
-
+	
+	const outputFormat = document.getElementById('excelFormat');
+	const selectedProjects = document.querySelectorAll('input[name="selectedProjects"]');
+	
+	let isValid = false;
 
 	if (optionRemoveUnwanted.checked) {
 		for (let required of requiredFormats) {
 			if (required.checked) {
-				isSelectedReqFormat = true;
+				isValid = true;
 				break;
 			}
 		}
-		if (!isSelectedReqFormat) {
+		if (!isValid) {
 			alert("Please Select Atleast One Required Format.");
+			return false;
+		}
+	}
+	
+	if (outputFormat.checked) {
+		isValid = false
+		for (let selectedProject of selectedProjects) {
+			if (selectedProject.checked) {
+				isValid = true;
+				break;
+			}
+		}
+		if (!isValid) {
+			alert("Please Select Atleast One Projrct.");
 			return false;
 		}
 	}
 
 	return true;
+}
+
+function changeOutputFormat(outputFormat){
+	const projectNameTable = document.getElementById('projectNameTable');
+	const selectedProjectsTable = document.getElementById('selectedProjectsTable');
+	
+	if(".xlsx" === outputFormat.value){
+		projectNameTable.style.display = 'none';
+		selectedProjectsTable.style.display = 'block';
+	} else {
+		projectNameTable.style.display = 'block';
+		selectedProjectsTable.style.display = 'none';
+	}
 }

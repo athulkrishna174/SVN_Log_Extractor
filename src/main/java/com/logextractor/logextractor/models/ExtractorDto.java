@@ -2,7 +2,6 @@ package com.logextractor.logextractor.models;
 
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -14,17 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Extractor {
-
+public class ExtractorDto {
 	private MultipartFile file;
 	private String outputFileFormat;
 	private String projectName;
 	private List<String> selectedProjects;
 	private List<String> optionList;
 	private List<String> requiredFormats;
-	private String extractedString;
-	private Workbook workbook;
-
-	private String message;
-
 }

@@ -15,19 +15,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.logextractor.logextractor.constants.AppConstants;
-import com.logextractor.logextractor.interfaces.CreateExcelInterface;
+import com.logextractor.logextractor.enums.ErrorMessage;
+import com.logextractor.logextractor.interfaces.ExtractorInterface;
 import com.logextractor.logextractor.models.Extractor;
 
 @Service
-public class CreateExcelService implements AppConstants, CreateExcelInterface {
+public class CreateExcelService implements AppConstants, ExtractorInterface {
 	Logger logger = LoggerFactory.getLogger(CreateExcelService.class);
 
 	@Override
-	public Workbook generateExcel(Extractor extractor) {
+	public Extractor extract(Extractor extractor) {
 
 		String extractedString = extractor.getExtractedString();
-		Workbook workbook = new XSSFWorkbook();
-		Sheet sheet = workbook.createSheet(extractor.getSelectedProject());
+		Workbook workbook = extractor.getWorkbook();
+		Sheet sheet = workbook.createSheet(extractor.getProjectName());
 				
 		XSSFCellStyle headerStyle = createHeaderStyle(workbook);
 	    XSSFCellStyle contentStyle = createContentStyle(workbook);
@@ -47,10 +48,12 @@ public class CreateExcelService implements AppConstants, CreateExcelInterface {
 
 			sheet.autoSizeColumn(cellCount);
 		} catch (Exception e) {
-			logger.debug(AN_ERROR_OCCURRED, e.getMessage(), e);
+			logger.debug(ErrorMessage.ERROR_OCCURRED.getMessage(), e.getMessage(), e);
 		}
+		
+		extractor.setWorkbook(workbook);
 
-		return workbook;
+		return extractor;
 	}
 	
 	private XSSFCellStyle createHeaderStyle(Workbook workbook) {
