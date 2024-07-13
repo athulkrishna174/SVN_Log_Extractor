@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Use an official Tomcat image to run the application
-FROM tomcat:10.0-jdk17-openjdk-slim
+FROM tomcat:10.0-jdk17-openjdk
 
 # Remove the default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
