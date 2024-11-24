@@ -7,10 +7,8 @@ A powerful and efficient tool to extract, filter, and analyze commit logs from S
 ---
 
 ## **Features**  
-- **Log Filtering**: Easily filter commit logs based on projects.  
-- **Search and Analyze**: Search for specific changes or patterns in commit messages.  
-- **Customizable Output**: Export filtered logs in JSON or CSV format.  
-- **User-Friendly API**: Provides REST endpoints for seamless integration with other tools.  
+- **Log Filtering**: Easily filter commit logs based on projects and file formats.  
+- **Customizable Output**: Export filtered logs in text or CSV format.  
 
 ---
 
@@ -49,7 +47,6 @@ A powerful and efficient tool to extract, filter, and analyze commit logs from S
 
 ---  
 
----
 
 ## **Contributing**  
 Contributions are welcome! If you'd like to improve this project, follow these steps:  
@@ -67,8 +64,6 @@ Contributions are welcome! If you'd like to improve this project, follow these s
    git push origin feature/your-feature-name  
    ```  
 5. Open a pull request.  
-
----
 
 ---
 
